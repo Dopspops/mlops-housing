@@ -1,0 +1,9 @@
+scikit-learn
+joblib
+boto3
+fastapi
+uvicorn
+pydantic
+flake8
+pytest
+requests
