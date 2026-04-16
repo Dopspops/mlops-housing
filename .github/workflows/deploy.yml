@@ -1,0 +1,72 @@
+name: MLOps Pipeline
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Lint
+        run: flake8 src/ tests/
+
+      - name: Run unit tests
+        run: pytest tests/test_train.py -v
+
+  deploy:
+    needs: ci
+    runs-on: ubuntu-latest
+    outputs:
+      endpoint_ip: ${{ steps.tf.outputs.endpoint_ip }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-2
+
+      - name: Upload source files to S3
+        run: |
+          aws s3 cp src/train.py s3://mlops-housing-artifacts/src/train.py
+          aws s3 cp src/app.py s3://mlops-housing-artifacts/src/app.py
+
+      - uses: hashicorp/setup-terraform@v3
+
+      - name: Terraform Init
+        run: terraform init
+        working-directory: infra
+
+      - name: Terraform Apply
+        id: tf
+        run: |
+          terraform apply -auto-approve
+          echo "endpoint_ip=$(terraform output -raw ec2_public_ip)" >> "$GITHUB_OUTPUT"
+        working-directory: infra
+
+  validate:
+    needs: deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Wait for instance bootstrap
+        run: sleep 120
+
+      - name: Smoke test
+        run: |
+          curl -f -X POST \
+            http://${{ needs.deploy.outputs.endpoint_ip }}:8000/predict \
+            -H "Content-Type: application/json" \
+            -d '{"features": [8.3, 41.0, 6.98, 1.02, 322.0, 2.56, 37.88, -122.23]}'
