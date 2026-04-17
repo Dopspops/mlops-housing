@@ -13,7 +13,7 @@ variable "instance_type" {
 variable "key_pair_name" {
   description = "Name of the SSH key pair for EC2 access"
   type        = string
-  default     = "mlops-key"
+  default     = "MLOps_Access"
 }
 
 variable "bucket_name" {
