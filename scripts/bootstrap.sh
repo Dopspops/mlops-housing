@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-BUCKET="mlops-housing-artifacts"
+BUCKET="mlops-housing-artifacts-2026"
 APP_DIR="/home/ec2-user/app"
 
 yum update -y

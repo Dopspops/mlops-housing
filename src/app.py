@@ -10,7 +10,7 @@ from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel, Field
 
 AWS_REGION = "us-east-2"
-S3_BUCKET = "mlops-housing-artifacts"
+S3_BUCKET = "mlops-housing-artifacts-2026"
 S3_KEY = "models/model.joblib"
 LOCAL_MODEL_PATH = "/tmp/model.joblib"
 EXPECTED_FEATURES = 8

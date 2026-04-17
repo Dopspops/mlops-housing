@@ -4,7 +4,7 @@ from sklearn.datasets import fetch_california_housing
 from sklearn.linear_model import LinearRegression
 from sklearn.model_selection import train_test_split
 
-BUCKET_NAME = "mlops-housing-artifacts"
+BUCKET_NAME = "mlops-housing-artifacts-2026"
 MODEL_S3_KEY = "models/model.joblib"
 MODEL_LOCAL_PATH = "/home/ec2-user/model.joblib"
 

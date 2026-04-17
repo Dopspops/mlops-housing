@@ -19,5 +19,5 @@ variable "key_pair_name" {
 variable "bucket_name" {
   description = "S3 bucket for data and model artifacts"
   type        = string
-  default     = "mlops-housing-artifacts"
+  default     = "mlops-housing-artifacts-2026"
 }

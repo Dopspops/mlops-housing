@@ -54,8 +54,8 @@ jobs:
 
       - name: Upload source files to S3
         run: |
-          aws s3 cp src/train.py s3://mlops-housing-artifacts/src/train.py
-          aws s3 cp src/app.py s3://mlops-housing-artifacts/src/app.py
+          aws s3 cp src/train.py s3://mlops-housing-artifacts-2026/src/train.py
+          aws s3 cp src/app.py s3://mlops-housing-artifacts-2026/src/app.py
 
       
 
