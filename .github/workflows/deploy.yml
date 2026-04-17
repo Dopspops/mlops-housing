@@ -64,7 +64,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Wait for instance bootstrap
-        run: sleep 120
+        run: sleep 300
 
       - name: Smoke test
         run: |
