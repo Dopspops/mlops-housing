@@ -1,4 +1,3 @@
-import pytest
 from fastapi.testclient import TestClient
 import numpy as np
 
@@ -24,7 +23,6 @@ def test_health_endpoint():
 
 
 def test_predict_success(monkeypatch):
-    # Mockeamos el modelo global
     from src import app as app_module
     app_module.model = MockModel()
 
@@ -56,9 +54,9 @@ def test_predict_model_not_loaded(monkeypatch):
 
 def test_predict_invalid_input():
     payload = {
-        "features": [1.0, 2.0]  # menos de 8 features
+        "features": [1.0, 2.0]
     }
 
     response = client.post("/predict", json=payload)
 
-    assert response.status_code == 422  # validación de FastAPI
+    assert response.status_code == 422

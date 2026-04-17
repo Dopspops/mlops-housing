@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import os
 from pathlib import Path
 from typing import List
 
@@ -83,6 +82,7 @@ def health():
         "model_key": S3_KEY,
         "region": AWS_REGION
     }
+
 
 @app.post("/predict", response_model=PredictionResponse)
 def predict(payload: PredictionRequest):

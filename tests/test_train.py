@@ -1,7 +1,6 @@
 import os
 import tempfile
 import joblib
-import numpy as np
 
 from src import train
 
@@ -19,10 +18,8 @@ def test_train_model():
     X_train, X_test, y_train, y_test = train.load_data()
     model = train.train_model(X_train, y_train)
 
-    # Verifica que el modelo tenga método predict
     assert hasattr(model, "predict")
 
-    # Prueba predicción
     sample = X_test[:1]
     prediction = model.predict(sample)
 
@@ -33,7 +30,6 @@ def test_save_model():
     X_train, X_test, y_train, y_test = train.load_data()
     model = train.train_model(X_train, y_train)
 
-    # Usamos un archivo temporal para no escribir en ruta real
     with tempfile.NamedTemporaryFile(delete=False) as tmp:
         temp_path = tmp.name
 

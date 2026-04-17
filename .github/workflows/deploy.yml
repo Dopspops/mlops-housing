@@ -22,7 +22,7 @@ jobs:
         run: flake8 src/ tests/
 
       - name: Run unit tests
-        run: pytest tests/test_train.py -v
+        run: pytest tests/ -v
 
   deploy:
     needs: ci
