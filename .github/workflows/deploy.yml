@@ -58,7 +58,6 @@ jobs:
           aws s3 cp src/app.py s3://mlops-housing-artifacts-2026/src/app.py
 
       
-
   validate:
     needs: deploy
     runs-on: ubuntu-latest
